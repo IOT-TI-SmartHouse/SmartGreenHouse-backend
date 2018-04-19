@@ -22,6 +22,6 @@ THE SOFTWARE.
 
 node {
     checkout scm
-    sh 'docker-compose up --build'
+    sh '/usr/local/bin/docker-compose up --build'
 }
 
