@@ -20,19 +20,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-pipeline {
-    node {
-       stage('Checkout'){
-           steps {
-                checkout scm
-           }
-       }
-
-       stage('Run Docker'){
-           steps {
-            sh 'docker-compose up --build'
-           }
-       }
-    }
+node {
+    checkout scm
+    sh 'docker-compose up --build'
 }
 
