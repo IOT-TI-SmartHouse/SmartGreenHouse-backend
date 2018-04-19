@@ -23,13 +23,15 @@ THE SOFTWARE.
 pipeline {
     stages {
        stage('Checkout'){
-
-          checkout scm
+           steps {
+                checkout scm
+           }
        }
 
        stage('Run Docker'){
-
+           steps {
             sh 'docker-compose up --build'
+           }
        }
     }
 }
