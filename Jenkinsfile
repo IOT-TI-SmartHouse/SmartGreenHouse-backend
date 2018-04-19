@@ -21,7 +21,7 @@ THE SOFTWARE.
 */
 
 pipeline {
-    stages {
+    node {
        stage('Checkout'){
            steps {
                 checkout scm
