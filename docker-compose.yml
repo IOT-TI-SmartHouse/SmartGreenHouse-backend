@@ -2,7 +2,7 @@ version: "2"
 services:
   app:
     container_name: app
-    restart: always
+    restart: on-failure:5 
     build: .
     ports:
       - "3000:3000"
@@ -11,6 +11,7 @@ services:
   mongo:
     container_name: mongo
     image: mongo
+    restart: on-failure:5 
     volumes:
       - ./data:/data/db
     ports:
