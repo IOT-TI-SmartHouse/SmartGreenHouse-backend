@@ -17,7 +17,7 @@ var server = app.listen(port, function() {
 });
 
 //Database connection
-if (!process.env.MONGO_PASSWORD || process.env.MONGO_USERNAME) {
+if (!process.env.MONGO_PASSWORD || !process.env.MONGO_USERNAME) {
     console.error("Username / password for mongodb not defined! set credentials as environmental variable")
     process.exit()
 }
