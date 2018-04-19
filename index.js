@@ -2,10 +2,9 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 
-const router = express.Router();
+var api_routes = require('./api_routes');
+
 const mongoose = require('mongoose');
-mongoose.Promise = global.Promise;
-app.use(router);
 
 
 
@@ -24,17 +23,20 @@ var server = app.listen(port, function(){
 
 
 //Database connection
-//var dbUrl =  "mongodb://username:password@ip:port/tablename";
+var username = process.env.MONGO_USERNAME;
+var password = process.env.MONGO_PASSWORD;
+console.log("username: " + username);
+console.log("password: " + password);
+var dbUrl =  "mongodb://" + username + ":" + password + "@178.62.247.98:27017/smartgreenhouse?authSource=admin";
 
-// mongoose.connect( dbUrl).then(
-//     seccess => { console.log("Connected to: " + dbUrl)},
-//     err => { console.log(err) }
-// );
-
+mongoose.connect( dbUrl).then(
+    seccess => { console.log("Connected to: " + dbUrl)},
+    err => { console.log(err) }
+);
 
 
 //Routes
-
+app.use('/api', api_routes);
 
 
 

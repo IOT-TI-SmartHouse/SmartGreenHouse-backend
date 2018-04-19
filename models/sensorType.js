@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var User = require('./user');
+const Schema = mongoose.Schema;
 
 var schema = new Schema({
     name: {type: String, required:true},

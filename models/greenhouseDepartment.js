@@ -1,8 +1,7 @@
 var mongoose = require('mongoose');
-var User = require('./user');
+const Schema = mongoose.Schema;
 
 var schema = new Schema({
-    id: {type: Number, required: true},
     greenhouse: {type: Number, required: true},
 },
 {
