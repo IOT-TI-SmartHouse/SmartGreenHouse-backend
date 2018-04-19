@@ -7,6 +7,9 @@ services:
     environment: 
       - MONGO_USERNAME=root
       - MONGO_PASSWORD=aofoiew031fefedomasd
+      # 178.62.247.98
+      - MONGO_HOST=localhost
+      - MONGO_DATABASE=smartgreenhouse
     ports:
       - "3000:3000"
     links:
