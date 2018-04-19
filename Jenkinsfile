@@ -20,13 +20,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-node('docker') {
-
-
-    currentBuild.result = "SUCCESS"
-
-    try {
-
+pipeline {
+    stages {
        stage('Checkout'){
 
           checkout scm
@@ -36,14 +31,6 @@ node('docker') {
 
             sh 'docker-compose up --build'
        }
-
-
-
     }
-    catch (err) {
-
-        currentBuild.result = "FAILURE"
-        throw err
-    }
-
 }
+
