@@ -1,43 +1,37 @@
-var express = require('express');
-var app = express();
-
-var api_routes = require('./api_routes');
-
-const mongoose = require('mongoose');
-
-var bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
-
+const express = require("express");
+const app = express();
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const api_routes = require("./api_routes");
+const port = 3000;
 
 //log every request to the console for debugging purposes
-app.all('*', function (req, res, next) {
-    console.log(req.method + " " + req.url);
-    next();
+app.all("*", function(req, res, next) {
+  console.log(req.method + " " + req.url);
+  next();
 });
-
 
 //Start server
-var port = 3000;
-var server = app.listen(port, function(){
-    console.log('Listening to server on port: ' + server.address().port);
+var server = app.listen(port, function() {
+  console.log("Listening to server on port: " + port);
 });
 
-
 //Database connection
-var username = process.env.MONGO_USERNAME;
-var password = process.env.MONGO_PASSWORD;
-var dbUrl =  "mongodb://" + username + ":" + password + "@178.62.247.98:27017/smartgreenhouse?authSource=admin";
-
-mongoose.connect( dbUrl).then(
-    seccess => { console.log("Connected to: " + dbUrl)},
-    err => { console.log(err) }
+if (!process.env.MONGO_PASSWORD || !process.env.MONGO_USERNAME) {
+    console.error("Username / password for mongodb not defined! set credentials as environmental variable")
+    process.exit()
+}
+const dbUrl = `mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOST}:27017/${process.env.MONGO_DATABASE}?authSource=admin`;
+mongoose.connect(dbUrl).then(
+  () => {
+    console.log("MongoDB: Connected to: " + dbUrl);
+  },
+  err => {
+    console.error(err);
+  }
 );
 
-
 //Routes
-app.use('/api', api_routes);
-
-
+app.use("/api", api_routes);
 
 module.exports = app;
