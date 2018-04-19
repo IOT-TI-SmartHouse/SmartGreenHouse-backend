@@ -32,7 +32,7 @@ node('docker') {
           checkout scm
        }
 
-       stage('Build Docker'){
+       stage('Run Docker'){
 
             sh 'docker-compose up --build'
        }
