@@ -1,0 +1,19 @@
+{
+  "name": "smartgreenhouse-backend",
+  "version": "0.0.1",
+  "description": "The backend for the SCOUT Smartgreenhouse project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IOT-TI-SmartHouse/SmartGreenHouse-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IOT-TI-SmartHouse/SmartGreenHouse-backend/issues"
+  },
+  "homepage": "https://github.com/IOT-TI-SmartHouse/SmartGreenHouse-backend#readme"
+}
