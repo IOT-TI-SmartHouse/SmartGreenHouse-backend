@@ -9,20 +9,19 @@ const schema = new mongoose.Schema({});
 
 const UserAccount = require('./models/userAccount');
 
-router.all('*', (req, res, next) = > {
+router.all('*', (req, res, next) => {
     next();
-})
-;
+});
 
 
 //UserAccounts
-router.post('/UserAccount', (req, res) = > {
+router.post('/UserAccount', (req, res) => {
     const userAccount = new UserAccount(req.body);
-userAccount.save().then((data) = > {
+userAccount.save().then((data) => {
     console.log("userAccount posted: " + userAccount);
 res.status(200).json({'status': 'ok'});
 }).
-catch(error = > {
+catch(error => {
     console.log(error.toString());
 res.status(500).json({"err": "server error while posting userAccount"})
 })
@@ -30,9 +29,9 @@ res.status(500).json({"err": "server error while posting userAccount"})
 })
 ;
 
-router.get('/UserAccount', verifyToken, (req, res) = > {
+router.get('/UserAccount', verifyToken, (req, res) => {
     console.log('verifying token');
-jwt.verify(req.token, 'verysecretkey', (err, authData) = > {
+jwt.verify(req.token, 'verysecretkey', (err, authData) => {
     console.log(req.token);
 if (err) {
     console.log(err);
@@ -53,9 +52,9 @@ if (err) {
         .find(query, {'_id': 0, 'username': 1, 'password': 1, 'isAdmin': 1, 'createdAt': 1})
         .limit(limit)
         .sort({createdAt: -1})
-        .then(result = > {
+        .then(result => {
         res.status(200).json(result);
-}).catch(err = > {
+}).catch(err => {
         res.status(500).json({'message': 'an error occured while getting data: ' + err});
 });
 }
@@ -63,7 +62,7 @@ if (err) {
 });
 
 //Authentication
-router.post('/authenticate', (req, res) = > {
+router.post('/authenticate', (req, res) => {
     var username = req.body.UserName;
     var password = req.body.Password;
 
@@ -78,7 +77,7 @@ router.post('/authenticate', (req, res) = > {
         }
         if (user) {
             console.log("user found, generating token");
-            jwt.sign({user: user}, 'verysecretkey', (err, token) = > {
+            jwt.sign({user: user}, 'verysecretkey', (err, token) => {
                 res.json({
                 token: token
                 });
