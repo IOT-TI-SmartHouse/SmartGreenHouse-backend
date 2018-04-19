@@ -4,6 +4,9 @@ services:
     container_name: app
     restart: on-failure:5 
     build: .
+    environment: 
+      - MONGO_USERNAME=root
+      - MONGO_PASSWORD=;a['K+g8vK7Y@9s[
     ports:
       - "3000:3000"
     links:
@@ -12,6 +15,10 @@ services:
     container_name: mongo
     image: mongo
     restart: on-failure:5 
+    environment:
+        # provide your credentials here
+        - MONGO_INITDB_ROOT_USERNAME=root
+        - MONGO_INITDB_ROOT_PASSWORD=;a['K+g8vK7Y@9s[
     volumes:
       - ./data:/data/db
     ports:

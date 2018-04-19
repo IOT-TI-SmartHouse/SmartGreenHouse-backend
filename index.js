@@ -17,7 +17,7 @@ app.all('*', function (req, res, next) {
 
 
 //Start server
-var port = 8000;
+var port = 3000;
 var server = app.listen(port, function(){
     console.log('Listening to server on port: ' + server.address().port);
 });
