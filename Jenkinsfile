@@ -22,8 +22,12 @@ THE SOFTWARE.
 
 node {
     checkout scm
-    stage {
-        sh 'sudo /usr/local/bin/docker-compose up --build --no-start'
+    stage("Build docker") {
+        sh '/usr/local/bin/docker-compose up --build --no-start'
     }
+    stage("start docker") {
+        sh '/usr/local/bin/docker-compose up --no-build --detach'
+    }
+
 }
 
