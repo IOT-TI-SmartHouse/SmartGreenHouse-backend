@@ -1,11 +1,14 @@
 const user = require('./src/routes/users')
-const loraRoute = require('./src/routes/lora')
+const lora = require('./src/routes/lora')
+const greenHouse = require('./src/routes/greenhouse')
 const express = require('express');
 const path = require('path');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const repository = require('./src/repository/repository')
+const swaggerUi = require('swagger-ui-express')
+const swaggerDocument = require('./swagger.json');
 
 const app = express();
 
@@ -21,10 +24,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 repository.connect();
 
 app.use('/user', user);
-app.use('/node', loraRoute);
+app.use('/node', lora);
+app.use('/greenhouse', greenHouse);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

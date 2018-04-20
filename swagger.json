@@ -1,0 +1,107 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "SmartGreenHouse API specification",
+    "description": "dont even read this",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/user/register": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "description": "Create new user in system, admin only.",
+        "parameters": [{
+          "name": "username",
+          "in": "body",
+          "description": "User that we want to create"
+        },
+        {
+          "name": "password",
+          "in": "body",
+          "description": "password for user"
+        },
+        {
+          "name": "isAdmin",
+          "in": "body",
+          "description": "optional boolean, default is false"
+        }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "New user is created"
+          },
+          "500": {
+            "description": "failed "
+          }
+        }
+      }
+    },
+    "/user/login": {
+      "parameters": [{
+        "name": "username",
+        "in": "body",
+        "required": true,
+        "description": "username of user that we want to login",
+        "type": "string"
+      },
+        {
+        "name": "password",
+        "in": "body",
+        "required": true,
+        "description": "password of user that we want to login",
+        "type": "string"
+      }],
+      "post": {
+        "summary": "log in ",
+        "responses": {
+          "200": {
+            "description": "User is logged in"
+          },
+          "500": {
+            "description": "failed "
+          }
+        }
+      }
+    },
+    "/node/lora/uplink": {
+      "parameters": [{
+        "name": "whateveryoulike",
+        "in": "body",
+        "required": true,
+        "description": "just logging uplink data",
+        "type": "string"
+      }],
+      "post": {
+        "summary": "log uplink data ",
+        "responses": {
+          "200": {
+            "description": "data logged"
+          },
+          "500": {
+            "description": "failed "
+          }
+        }
+      }
+    }
+  }
+}
