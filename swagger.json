@@ -72,6 +72,9 @@
         "type": "string"
       }],
       "post": {
+        "tags": [
+          "User"
+        ],
         "summary": "log in ",
         "responses": {
           "200": {
