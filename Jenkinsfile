@@ -24,6 +24,7 @@ node {
     checkout scm
     stage("Build docker") {
         sh "ls -l"
+        sh "echo $USER"
         sh "docker ps"
         sh 'docker-compose up --build --no-deps --no-recreate'
     }
