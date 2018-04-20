@@ -1,7 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const User = require('../Models/userModel')
+const User = require('../models/UserAccount')
 const verifyToken = require('../jwt/verifyToken')
 
 const config = require('../../config')
@@ -12,7 +12,7 @@ router.post('/register', function (req, res) {
   const hashedPassword = bcrypt.hashSync(req.body.password, 8);
 
   User.create({
-    name: req.body.name,
+    username: req.body.username,
     password: hashedPassword
   },
     (err, user) => {
