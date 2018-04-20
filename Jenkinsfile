@@ -23,7 +23,7 @@ THE SOFTWARE.
 node {
     checkout scm
     stage("start docker") {
-        sh 'docker-compose rm --stop'
+        sh 'docker-compose down'
         sh 'docker-compose up --build -d --force-recreate'
     }
 
