@@ -5,6 +5,9 @@ const mongoose = require("mongoose");
 const api_routes = require("./api_routes");
 const port = 3000;
 
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+
 //log every request to the console for debugging purposes
 app.all("*", function(req, res, next) {
   console.log(req.method + " " + req.url);
