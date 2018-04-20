@@ -57,25 +57,32 @@
       }
     },
     "/user/login": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "description": "log in with username and password",
       "parameters": [{
         "name": "username",
         "in": "body",
         "required": true,
         "description": "username of user that we want to login",
-        "type": "string"
+        "schema": {
+          "type": "string"
+        }
       },
         {
         "name": "password",
         "in": "body",
         "required": true,
         "description": "password of user that we want to login",
-        "type": "string"
+          "schema": {
+            "type": "string"
+          }
       }],
-      "post": {
-        "tags": [
-          "User"
-        ],
-        "summary": "log in ",
+      "produces": [
+        "application/json"
+      ],
         "responses": {
           "200": {
             "description": "User is logged in"
@@ -95,6 +102,9 @@
         "type": "string"
       }],
       "post": {
+        "tags": [
+          "Node/Lora"
+        ],
         "summary": "log uplink data ",
         "responses": {
           "200": {
@@ -106,5 +116,21 @@
         }
       }
     }
+  },
+  "definitions": {
+    "user": {
+      "required": [
+        "username",
+        "password"
+      ],
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+    }
   }
+}
 }

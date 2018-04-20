@@ -48,7 +48,6 @@ router.post('/register', verifyToken, function (req, res) {
       }
   });
 
-
 });
 
 router.post('/login', function (req, res) {
