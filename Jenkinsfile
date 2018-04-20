@@ -24,7 +24,7 @@ node {
     checkout scm
     stage("Build docker") {
         sh "ls -l"
-        sh "chmod 755 -R ."
+        sh "docker ps"
         sh 'docker-compose up --build --no-deps --no-recreate'
     }
     stage("start docker") {
