@@ -22,11 +22,9 @@ THE SOFTWARE.
 
 node {
     checkout scm
-    stage("Build docker") {
-        sh 'docker-compose up --build --no-deps --no-recreate'
-    }
     stage("start docker") {
-        sh 'docker-compose up --no-build --detach --force-recreate'
+        sh 'docker-compose down'
+        sh 'docker-compose up --build --detach'
     }
 
 }
