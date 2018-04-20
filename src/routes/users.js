@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 
 const fs = require('fs');
 
-fs.readdir("../models", (err, files) => {
+fs.readdir("../", (err, files) => {
   files.forEach(file => {
     console.log(file);
   });
