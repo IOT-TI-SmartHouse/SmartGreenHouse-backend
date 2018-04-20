@@ -23,8 +23,6 @@ THE SOFTWARE.
 node {
     checkout scm
     stage("Build docker") {
-        sh "ls -l"
-        sh "docker info"
         sh 'docker-compose up --build --no-deps --no-recreate'
     }
     stage("start docker") {
