@@ -22,6 +22,8 @@ THE SOFTWARE.
 
 node {
     checkout scm
-    sh 'sudo /usr/local/bin/docker-compose up --build'
+    stage {
+        sh 'sudo /usr/local/bin/docker-compose up --build --no-start'
+    }
 }
 
