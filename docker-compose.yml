@@ -10,7 +10,7 @@ services:
       - MONGO_HOST=178.62.247.98
       - MONGO_DATABASE=smartgreenhouse
     ports:
-      - "80:3000"
+      - "3000:3000"
     links:
       - mongo
   mongo:
