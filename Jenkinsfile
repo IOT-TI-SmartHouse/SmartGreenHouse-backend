@@ -21,11 +21,18 @@ THE SOFTWARE.
 */
 
 node {
-    checkout scm
-    stage("start docker") {
-        sh 'docker-compose down'
-        sh 'docker-compose up --build -d --force-recreate'
-    }
+     if (env.BRANCH_NAME == "develop" || env.BRANCH_NAME == "master") {
+        checkout scm
+        stage("stop docker") {
+            sh 'docker-compose down'
+        }
+        stage("build docker") {
+            sh 'docker-compose build'
+        }
+        stage("start docker") {
+            sh 'docker-compose up --no-build -d --force-recreate'
+        }
+       }
 
 }
 
