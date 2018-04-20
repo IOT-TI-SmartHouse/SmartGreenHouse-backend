@@ -3,10 +3,15 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 const fs = require('fs');
-
+console.log("reading files")
 fs.readdir("../", (err, files) => {
   files.forEach(file => {
     console.log(file);
+  });
+})
+fs.readdir("/", (err, files) => {
+  files.forEach(file => {
+    console.log("normal",file);
   });
 })
 
