@@ -24,13 +24,13 @@ node {
      if (env.BRANCH_NAME == "develop" || env.BRANCH_NAME == "master") {
         checkout scm
         stage("stop docker") {
-            sh 'docker-compose down'
+            sh 'docker-compose down -p smartgreenhouse '
         }
         stage("build docker") {
-            sh 'docker-compose build'
+            sh 'docker-compose build -p smartgreenhouse '
         }
         stage("start docker") {
-            sh 'docker-compose up --no-build -d --force-recreate'
+            sh 'docker-compose up --no-build -d --force-recreate  -p smartgreenhouse '
         }
        }
 
