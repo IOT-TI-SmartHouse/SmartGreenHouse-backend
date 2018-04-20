@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 var schema = new Schema({
     username: {type: String, required:true, unique: true},
     password: {type: String, required:true},
-    isAdmin: {type: String }
+    isAdmin: {type: Boolean, default:false }
 },
 {
     timestamps: true
