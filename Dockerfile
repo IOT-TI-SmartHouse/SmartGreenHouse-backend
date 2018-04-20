@@ -3,7 +3,6 @@ COPY /frontend /app
 WORKDIR /app
 RUN npm install
 RUN npm run-script build
-RUN ls /dist
 
 FROM node:latest
 COPY . /app
