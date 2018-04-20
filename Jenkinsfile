@@ -21,13 +21,18 @@ THE SOFTWARE.
 */
 
 node {
-    checkout scm
-    stage("Build docker") {
-        sh 'docker-compose up --build --no-deps --no-recreate'
-    }
-    stage("start docker") {
-        sh 'docker-compose up --no-build --detach --force-recreate'
-    }
+     if (env.BRANCH_NAME == "develop" || env.BRANCH_NAME == "master") {
+        checkout scm
+        stage("stop docker") {
+            sh 'docker-compose -p smartgreenhouse down'
+        }
+        stage("build docker") {
+            sh 'docker-compose -p smartgreenhouse build'
+        }
+        stage("start docker") {
+            sh 'docker-compose -p smartgreenhouse up --no-build -d --force-recreate'
+        }
+       }
 
 }
 
