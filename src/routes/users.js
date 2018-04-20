@@ -1,6 +1,15 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+
+const fs = require('fs');
+
+fs.readdir("../models", (err, files) => {
+  files.forEach(file => {
+    console.log(file);
+  });
+})
+
 const User = require('../models/UserAccount')
 const verifyToken = require('../jwt/verifyToken')
 
