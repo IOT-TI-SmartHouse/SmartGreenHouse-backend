@@ -24,7 +24,7 @@ node {
     checkout scm
     stage("start docker") {
         sh 'docker-compose down'
-        sh 'docker-compose up --build -d'
+        sh 'docker-compose up --build -d --force-recreate'
     }
 
 }
