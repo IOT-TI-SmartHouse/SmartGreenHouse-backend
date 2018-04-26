@@ -8,6 +8,9 @@ var schema = new Schema({
     timestamps: true
 });
 
+
+const User = require("../models/userAccount");
+
 schema.statics.all = function(userId, greenhouseId) {
     return new Promise((resolve, reject) => {
         UserAccount.verifyAdmin(userId).then(user => {
