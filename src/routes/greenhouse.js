@@ -35,9 +35,10 @@ router.post("/register", verifyToken, (req, res) => {
 });
 
 router.get("/getAll", verifyToken, (req, res) => {
-  
-  const userId = req.headers["userId"];
+  const userId = req.headers["userid"];
+  console.log(req.headers);
   if (userId) {
+    console.log(userId)
     User.verifyAdmin(req.userId).then(
       user => {
         Greenhouse.all(userId).then(

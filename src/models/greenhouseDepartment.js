@@ -2,7 +2,8 @@ var mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 var schema = new Schema({
-    greenhouse: {type: Schema.Types.ObjectId, required: true, ref: "Greenhouse"},
+        name: { type: String, required: true },
+        greenhouse: {type: Schema.Types.ObjectId, required: true, ref: "Greenhouse"},
     active: {type: Boolean, required: true, default: true}
 },
 {

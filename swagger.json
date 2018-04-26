@@ -103,22 +103,49 @@
         }
       }
     },
-    "/node/lora/uplink": {
-      "parameters": [
-        {
-          "name": "whateveryoulike",
-          "in": "body",
-          "required": true,
-          "description": "just logging uplink data",
-          "type": "string"
-        }
-      ],
-      "post": {
-        "tags": ["Node/Lora"],
-        "summary": "log uplink data ",
+    "/user/get": {
+      "get": {
+        "tags": ["User"],
+        "description": "get user object with username and account",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "required": true,
+            "description": "json web token",
+            "schema": {
+              "type": "object",
+              "required": ["x-access-token"],
+              "properties": {
+                "x-access-token": {
+                  "type": "bearer"
+                }
+              }
+            }
+          },
+          {
+            "name": "credentials",
+            "in": "body",
+            "required": true,
+            "description": "credentials of user that we want to get",
+            "schema": {
+              "type": "object",
+              "required": ["username", "password"],
+              "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
-            "description": "data logged"
+            "description": "Succes"
           },
           "500": {
             "description": "failed "
@@ -128,7 +155,7 @@
     },
     "/greenhouse/register": {
       "post": {
-        "tags": ["Greenhouse/Register"],
+        "tags": ["GreenHouse"],
         "summary": "Creating of register an new greenhouse",
         "responses": {
           "200": {
@@ -173,6 +200,641 @@
           "type": "string"
         }
       ]
+    },
+    "/greenhouse/update": {
+      "post": {
+        "tags": ["GreenHouse"],
+        "summary": "Updating greenhouse",
+        "responses": {
+          "200": {
+            "description": "Updated greenhouse",
+            "schema": {
+              "properties": {
+                "greenhouse": {
+                  "type": "string",
+                  "description": "The id of the updated greenhouse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Greenhouse update failed, or not valid admin"
+          }
+        },
+        "description": "update greenhouse",
+        "parameters": [
+          {
+            "name": "credentials",
+            "in": "body",
+            "required": true,
+            "description": "credentials of greenhouse that we want to edit/update",
+            "schema": {
+              "type": "object",
+              "required": ["id", "name", "location"],
+              "properties": {
+                "id":{
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "location": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": ["application/json"]
+      }
+    },
+    "/greenhouse/getAll": {
+      "get": {
+        "tags": ["GreenHouse"],
+        "summary": "get all greenhouses for user",
+        "responses": {
+          "200": {
+            "description": "greenhouses",
+            "schema": {
+              "properties": {
+                "greenhouse": {
+                  "type": "string",
+                  "description": "The ids of the greenhouses"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "get all failed"
+          }
+        },
+        "description": "get all greenhouses for user",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": ["application/json"]
+      }
+    },
+    "/greenhouseaccess/register": {
+      "post": {
+        "tags": ["GreenHouseAccess"],
+        "summary": "Creating a new greenhouseaccess",
+        "responses": {
+          "200": {
+            "description": "Created greenhouseaccess",
+            "schema": {
+              "properties": {
+                "greenhouseaccess": {
+                  "type": "string",
+                  "description": "The id of the created greenhouseaccess"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Greenhouseaccess creation failed"
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "GreenhouseAccess details",
+          "in": "body",
+          "required": "true",
+          "description": "Creating an new greenhouseAccess",
+          "schema": {
+            "type": "object",
+            "required": true,
+            "properties": {
+              "user": {
+                "type": "string"
+              },
+              "greenhouse": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "name": "x-access-token",
+          "in": "header",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    "/greenhouseaccess/delete": {
+      "post": {
+        "tags": ["GreenHouseAccess"],
+        "summary": "Delete greenhouseaccess",
+        "responses": {
+          "200": {
+            "description": "Deleted greenhouseaccess",
+            "schema": {
+              "properties": {
+                "greenhouseaccess": {
+                  "type": "string",
+                  "description": "The id of the deleted greenhouseaccess"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "GreenhouseAccess update failed."
+          }
+        },
+        "description": "update greenhouseaccess",
+        "parameters": [
+          {
+            "name": "credentials",
+            "in": "body",
+            "required": true,
+            "description": "credentials of greenhouseaccess that we want to delete",
+            "schema": {
+              "type": "object",
+              "required": ["id"],
+              "properties": {
+                "id":{
+                  "type": "string"
+                },
+                "user": {
+                  "type": "string"
+                },
+                "greenhouse": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": ["application/json"]
+      }
+    },
+    "/greenhousedepartment/register": {
+      "post": {
+        "tags": ["GreenHouseDepartment"],
+        "summary": "Creating a new greenhousedepartment",
+        "responses": {
+          "200": {
+            "description": "Created greenhousedepartment",
+            "schema": {
+              "properties": {
+                "greenhouseaccess": {
+                  "type": "string",
+                  "description": "The id of the created greenhousedepartment"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "greenhousedepartment creation failed"
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "greenhousedepartment details",
+          "in": "body",
+          "required": "true",
+          "description": "Creating an new greenhousedepartment",
+          "schema": {
+            "type": "object",
+            "required": true,
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "greenhouse": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "name": "x-access-token",
+          "in": "header",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    "/greenhousedepartment/delete": {
+      "post": {
+        "tags": ["GreenHouseDepartment"],
+        "summary": "Delete greenhousedepartment",
+        "responses": {
+          "200": {
+            "description": "Deleted greenhouseaccess",
+            "schema": {
+              "properties": {
+                "greenhousedepartement": {
+                  "type": "string",
+                  "description": "The id of the deleted greenhousedepartment"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "greenhousedepartment update failed."
+          }
+        },
+        "description": "Delete greenhousedepartment",
+        "parameters": [
+          {
+            "name": "credentials",
+            "in": "body",
+            "required": true,
+            "description": "credentials of greenhousedepartment that we want to delete",
+            "schema": {
+              "type": "object",
+              "required": ["id"],
+              "properties": {
+                "id":{
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": ["application/json"]
+      }
+    },
+    "/greenhousedepartment/getAll": {
+      "get": {
+        "tags": ["GreenHouseDepartment"],
+        "summary": "get all greenhousedepartments for greenhouse",
+        "responses": {
+          "200": {
+            "description": "greenhouses",
+            "schema": {
+              "properties": {
+                "greenhouse": {
+                  "type": "string",
+                  "description": "The ids of the greenhousedepartments"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "get all failed"
+          }
+        },
+        "description": "get all greenhousedepartments for greenhouse",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "greenhouse",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": ["application/json"]
+      }
+    },
+    "/sensornode/register": {
+      "post": {
+        "tags": ["SensorNode"],
+        "summary": "Creating a new sensornode",
+        "responses": {
+          "200": {
+            "description": "Created sensornode",
+            "schema": {
+              "properties": {
+                "sensornode": {
+                  "type": "string",
+                  "description": "The id of the created sensornode"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "sensornode creation failed"
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "sensornode details",
+          "in": "body",
+          "required": "true",
+          "description": "Creating an new sensornode",
+          "schema": {
+            "type": "object",
+            "required": true,
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "greenhouseDepartment": {
+                "type": "string"
+              },
+              "latitude": {
+                "type": "string"
+              },
+              "longitude": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "name": "x-access-token",
+          "in": "header",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    "/sensornode/update": {
+      "post": {
+        "tags": ["SensorNode"],
+        "summary": "Update sensornode",
+        "responses": {
+          "200": {
+            "description": "updated sensornode",
+            "schema": {
+              "properties": {
+                "greenhousedepartement": {
+                  "type": "string",
+                  "description": "The id of the updated sensornode"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "sensornode update failed."
+          }
+        },
+        "description": "Update sensornode",
+        "parameters": [
+          {
+            "name": "credentials",
+            "in": "body",
+            "required": true,
+            "description": "credentials of sensornode that we want to update",
+            "schema": {
+              "type": "object",
+              "required": true,
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "greenhouseDepartment": {
+                  "type": "string"
+                },
+                "latitude": {
+                  "type": "string"
+                },
+                "longitude": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": ["application/json"]
+      }
+    },
+    "/sensornode/delete": {
+      "post": {
+        "tags": ["SensorNode"],
+        "summary": "Delete sensornode",
+        "responses": {
+          "200": {
+            "description": "Deleted sensornode",
+            "schema": {
+              "properties": {
+                "greenhousedepartement": {
+                  "type": "string",
+                  "description": "The id of the deleted sensornode"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "sensornode delete failed."
+          }
+        },
+        "description": "Delete sensornode",
+        "parameters": [
+          {
+            "name": "credentials",
+            "in": "body",
+            "required": true,
+            "description": "credentials of sensornode that we want to delete",
+            "schema": {
+              "type": "object",
+              "required": ["id"],
+              "properties": {
+                "id":{
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": ["application/json"]
+      }
+    },
+    "/sensornode/getAll": {
+      "get": {
+        "tags": ["SensorNode"],
+        "summary": "get all sensornodes for greenhousedepartment",
+        "responses": {
+          "200": {
+            "description": "sensornodes",
+            "schema": {
+              "properties": {
+                "greenhouse": {
+                  "type": "string",
+                  "description": "The ids of the sensornodes"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "get all failed"
+          }
+        },
+        "description": "get all sensornodes for greenhousedepartment",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "greenhousedepartment",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": ["application/json"]
+      }
+    },
+    "/sensordata/register": {
+      "post": {
+        "tags": ["SensorData"],
+        "summary": "Creating a new sensordata",
+        "responses": {
+          "200": {
+            "description": "Created sensordata",
+            "schema": {
+              "properties": {
+                "sensornode": {
+                  "type": "string",
+                  "description": "The id of the created sensordata"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "sensordata creation failed"
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "sensordata details",
+          "in": "body",
+          "required": "true",
+          "description": "Creating an new sensordata",
+          "schema": {
+            "type": "object",
+            "required": true,
+            "properties": {
+              "node": {
+                "type": "string"
+              },
+              "sensorType": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "name": "x-access-token",
+          "in": "header",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    "/sensordata/getAll": {
+      "get": {
+        "tags": ["SensorData"],
+        "summary": "get all sensordata for sensornode id",
+        "responses": {
+          "200": {
+            "description": "sensordata",
+            "schema": {
+              "properties": {
+                "greenhouse": {
+                  "type": "string",
+                  "description": "The ids of the sensordata"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "get all failed"
+          }
+        },
+        "description": "get all sensordata for sensornode",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "sensornode",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": ["application/json"]
+      }
+    },
+
+
+
+    "/node/lora/uplink": {
+      "parameters": [
+        {
+          "name": "whateveryoulike",
+          "in": "body",
+          "required": true,
+          "description": "just logging uplink data",
+          "type": "string"
+        }
+      ],
+      "post": {
+        "tags": ["Node/Lora"],
+        "summary": "log uplink data ",
+        "responses": {
+          "200": {
+            "description": "data logged"
+          },
+          "500": {
+            "description": "failed "
+          }
+        }
+      }
     }
   }
 }
