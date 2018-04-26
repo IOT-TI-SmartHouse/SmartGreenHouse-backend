@@ -32,6 +32,7 @@ const UserAccount = require("./userAccount")
 schema.statics.all = function(userId) {
     return new Promise((resolve, reject) => {
         UserAccount.verifyAdmin(userId).then(user => {
+            console.log("user is admin, returning all greenhouses")
             this.find((error, greenhouses) => {
                 if (error) {
                     reject(error);
@@ -40,6 +41,7 @@ schema.statics.all = function(userId) {
             })
         }, error => {
             if(!error) { // user is no admin
+                console.log("user is no admin, returning only selected greenhouses")
                 GreenhouseAccess.find({ user: userId })
                     .populate("greenhouse")
                     .exec((error, greenhouses) => {

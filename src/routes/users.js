@@ -40,8 +40,6 @@ router.post('/login', function (req, res) {
 
   User.findOne({ username: req.body.username }, function (err, user) {
     if (err) return res.status(500).send('Error on the server.');
-    console.log(req.body.username);
-    console.log(user);
     if (!user) return res.status(404).send('Error on the server.');
 
     const passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
