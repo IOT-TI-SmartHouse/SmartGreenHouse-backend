@@ -15,12 +15,12 @@ schema.statics.verifyAdmin = function(accountId) {
         this.findById(accountId, function(err, user) {
             // console.log(user);
             if(err){
-                resolve(err);
+                reject(err);
             } else {
                 if (user.isAdmin) {
                     resolve(user)
                 } else {
-                    reject("No admin rights")
+                    reject()
                 }
             }
         });
