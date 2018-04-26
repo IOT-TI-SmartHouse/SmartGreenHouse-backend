@@ -9,7 +9,7 @@ var schema = new Schema({
 });
 
 
-const User = require("../models/userAccount");
+const UserAccount = require("../models/userAccount");
 
 schema.statics.all = function(userId, greenhouseId) {
     return new Promise((resolve, reject) => {
