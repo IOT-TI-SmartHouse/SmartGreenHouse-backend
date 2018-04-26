@@ -32,7 +32,7 @@ const UserAccount = require("./userAccount")
 schema.statics.all = function(userId) {
     return new Promise((resolve, reject) => {
         UserAccount.verifyAdmin(userId).then(user => {
-            this.find((greenhouses, error) => {
+            this.find((error, greenhouses) => {
                 if (error) {
                     reject(error);
                 }
@@ -42,7 +42,7 @@ schema.statics.all = function(userId) {
             if(!error) { // user is no admin
                 GreenhouseAccess.find({ user: userId })
                     .populate("greenhouse")
-                    .exec((greenhouses, error) => {
+                    .exec((error, greenhouses) => {
                     if (error) {
                         reject(error);
                     }

@@ -60,7 +60,7 @@ router.post("/update", verifyToken, (req, res) => {
                 "[Greenhouse::register] error updating greenhouse : " + err
               );
           } else {
-            res.status(200).send({ greenhouse: greenhouse._id });
+            res.status(200).send({ isUpdated: true });
           }
         }
       );
