@@ -27,20 +27,42 @@
           "User"
         ],
         "description": "Create new user in system, admin only.",
-        "parameters": [{
-          "name": "username",
-          "in": "body",
-          "description": "User that we want to create"
-        },
-        {
-          "name": "password",
-          "in": "body",
-          "description": "password for user"
-        },
-        {
-          "name": "isAdmin",
-          "in": "body",
-          "description": "optional boolean, default is false"
+        "parameters": [
+          {
+            "name":"x-access-token",
+            "in":"header",
+            "required": true,
+            "description": "json web token",
+            "schema": {
+              "type": "object",
+              "required": ["x-access-token"],
+              "properties" : {
+                "x-access-token": {
+                  "type": "bearer"
+                }
+              }
+            }
+          },
+          {
+          "name": "credentials",
+          "in":"body",
+          "required": true,
+          "description":"credentials of user that we want to create",
+          "schema": {
+            "type": "object",
+            "required": ["username", "password", "isAdmin"],
+            "properties" : {
+              "username": {
+                "type": "string"
+              },
+              "password": {
+                "type": "string"
+              },
+              "isAdmin": {
+                "type": "boolean"
+              }
+            }
+          }
         }
         ],
         "produces": [
@@ -66,7 +88,7 @@
         "name": "credentials",
         "in": "body",
         "required": true,
-        "description": "username of user that we want to login",
+        "description": "credentials of user that we want to login",
         "schema": {
           "type": "object",
           "required": ["username", "password"],
@@ -116,21 +138,5 @@
         }
       }
     }
-  },
-  "definitions": {
-    "user": {
-      "required": [
-        "username",
-        "password"
-      ],
-      "properties": {
-        "username": {
-          "type": "string"
-        },
-        "password": {
-          "type": "string"
-        }
-    }
   }
-}
 }
