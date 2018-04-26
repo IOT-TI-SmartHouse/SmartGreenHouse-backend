@@ -11,7 +11,7 @@ var schema = new Schema(
   }
 );
 
-const GreenhouseAccess = require("greenhouseAccess");
+const GreenhouseAccess = require("./greenhouseAccess");
 
 schema.methods.hasAccess = function(userId) {
   return new Promise((resolve, reject) => {
@@ -27,7 +27,7 @@ schema.methods.hasAccess = function(userId) {
   });
 };
 
-const UserAccount = require("userAccount")
+const UserAccount = require("./userAccount")
 
 schema.statics.all = function(userId) {
     return new Promise((resolve, reject) => {
