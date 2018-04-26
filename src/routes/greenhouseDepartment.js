@@ -76,8 +76,8 @@ router.post("/delete", verifyToken, function(req, res) {
 
 
 router.get("/getAll", verifyToken, (req, res) => {
-    GreenhouseDepartment.all(req.userId).then(
-        greenhouses => res.status(200).send({ user: req.userId, departments: greenhouses }),
+    GreenhouseDepartment.all(req.userId, req.headers["greenhouse"]).then(
+        greenhouses => res.status(200).send({ departments: greenhouses }),
         err =>
           res
             .status(500)
