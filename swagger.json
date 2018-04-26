@@ -11,41 +11,32 @@
   },
   "host": "localhost:3000",
   "basePath": "/",
-  "schemes": [
-    "http"
-  ],
-  "consumes": [
-    "application/json"
-  ],
-  "produces": [
-    "application/json"
-  ],
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
   "paths": {
     "/user/register": {
       "post": {
-        "tags": [
-          "User"
-        ],
+        "tags": ["User"],
         "description": "Create new user in system, admin only.",
-        "parameters": [{
-          "name": "username",
-          "in": "body",
-          "description": "User that we want to create"
-        },
-        {
-          "name": "password",
-          "in": "body",
-          "description": "password for user"
-        },
-        {
-          "name": "isAdmin",
-          "in": "body",
-          "description": "optional boolean, default is false"
-        }
+        "parameters": [
+          {
+            "name": "username",
+            "in": "body",
+            "description": "User that we want to create"
+          },
+          {
+            "name": "password",
+            "in": "body",
+            "description": "password for user"
+          },
+          {
+            "name": "isAdmin",
+            "in": "body",
+            "description": "optional boolean, default is false"
+          }
         ],
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "New user is created"
@@ -58,31 +49,29 @@
     },
     "/user/login": {
       "post": {
-        "tags": [
-          "User"
-        ],
+        "tags": ["User"],
         "description": "log in with username and password",
-      "parameters": [{
-        "name": "credentials",
-        "in": "body",
-        "required": true,
-        "description": "username of user that we want to login",
-        "schema": {
-          "type": "object",
-          "required": ["username", "password"],
-          "properties" : {
-            "username": {
-              "type": "string"
-            },
-            "password": {
-              "type": "string"
+        "parameters": [
+          {
+            "name": "credentials",
+            "in": "body",
+            "required": true,
+            "description": "username of user that we want to login",
+            "schema": {
+              "type": "object",
+              "required": ["username", "password"],
+              "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
             }
           }
-        }
-      }],
-      "produces": [
-        "application/json"
-      ],
+        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "User is logged in"
@@ -94,17 +83,17 @@
       }
     },
     "/node/lora/uplink": {
-      "parameters": [{
-        "name": "whateveryoulike",
-        "in": "body",
-        "required": true,
-        "description": "just logging uplink data",
-        "type": "string"
-      }],
+      "parameters": [
+        {
+          "name": "whateveryoulike",
+          "in": "body",
+          "required": true,
+          "description": "just logging uplink data",
+          "type": "string"
+        }
+      ],
       "post": {
-        "tags": [
-          "Node/Lora"
-        ],
+        "tags": ["Node/Lora"],
         "summary": "log uplink data ",
         "responses": {
           "200": {
@@ -115,14 +104,59 @@
           }
         }
       }
+    },
+    "/greenhouse/register": {
+      "post": {
+        "tags": ["Greenhouse/Register"],
+        "summary": "Creating of register an new greenhouse",
+        "responses": {
+          "200": {
+            "description": "Created greenhouse",
+            "schema": {
+              "properties": {
+                "greenhouse": {
+                  "type": "string",
+                  "description": "The id of the created greenhouse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Greenhouse creation failed, or not valid admin"
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "Greenhouse details",
+          "in": "body",
+          "required": "true",
+          "description": "Creating an new greenhouse",
+          "schema": {
+            "type": "object",
+            "required": true,
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "name": "x-access-token",
+          "in": "header",
+          "required": true,
+          "type": "string"
+        }
+      ]
     }
   },
   "definitions": {
     "user": {
-      "required": [
-        "username",
-        "password"
-      ],
+      "required": ["username", "password"],
       "properties": {
         "username": {
           "type": "string"
@@ -130,7 +164,7 @@
         "password": {
           "type": "string"
         }
+      }
     }
   }
-}
 }

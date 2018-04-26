@@ -2,7 +2,6 @@ var mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 var schema = new Schema({
-    _id: Schema.Types.ObjectId,
     username: {type: String, required:true, unique: true},
     password: {type: String, required:true},
     isAdmin: {type: Boolean, default:false }
@@ -10,5 +9,22 @@ var schema = new Schema({
 {
     timestamps: true
 });
+
+schema.statics.verifyAdmin = function(accountId) {
+    return new Promise((resolve, reject) => {
+        this.findById(accountId, function(err, user) {
+            // console.log(user);
+            if(err){
+                resolve(err);
+            } else {
+                if (user.isAdmin) {
+                    resolve(user)
+                } else {
+                    reject("No admin rights")
+                }
+            }
+        });
+    })
+};
 
 module.exports = mongoose.model('UserAccount', schema);

@@ -7,47 +7,33 @@ const verifyToken = require('../jwt/verifyToken')
 const config = require('../../config')
 const router = express.Router();
 
+
 router.post('/register', verifyToken, function (req, res) {
-  let requestedBy = req.userId;
-  console.log(requestedBy);
-
-  User.findById(requestedBy, function(err, user) {
-      console.log(user);
-      if(err){
-          console.log(err);
-          res.status(500).send("[User::register] error registering user : " + err);
-      } else {
-          console.log(user.isAdmin);
-          if(user.isAdmin){
-              console.log("this user has admin rights! " + user.username);
-
-              const hashedPassword = bcrypt.hashSync(req.body.password, 8);
-              const admin = req.body.isAdmin === undefined ? false: req.body.isAdmin;
+  User.verifyAdmin(req.userId).then(success => {
+        const hashedPassword = bcrypt.hashSync(req.body.password, 8);
+        const admin = req.body.isAdmin === undefined ? false: req.body.isAdmin;
 
 
-              User.create({
-                      username: req.body.username,
-                      password: hashedPassword,
-                      isAdmin: admin
-                  },
-                  (err, user) => {
-                      if (err) {
-                          console.log('[User::register] error registering user : ' + err);
-                          return res.status(500).send("There was a problem registering the user.");
-                      }
-                      // create a token
-                      const token = jwt.sign({ id: user._id }, config.Secret, {
-                          expiresIn: 86400 // expires in 24 hours
-                      });
+        User.create({
+                username: req.body.username,
+                password: hashedPassword,
+                isAdmin: admin
+            },
+            (err, user) => {
+                if (err) {
+                    console.log('[User::register] error registering user : ' + err);
+                    return res.status(500).send("There was a problem registering the user.");
+                }
+                // create a token
+                const token = jwt.sign({ id: user._id }, config.Secret, {
+                    expiresIn: 86400 // expires in 24 hours
+                });
 
-                      res.status(200).send({ auth: true, token: token });
-                  });
-          } else {
-              res.status(500).send("No admin rights provided, you can not register users");
-          }
-      }
+                res.status(200).send({ auth: true, token: token });
+            });
+  }, err => {
+    res.status(500).send("[User::register] error registering user : " + err);
   });
-
 });
 
 router.post('/login', function (req, res) {
