@@ -49,7 +49,7 @@ schema.statics.all = function(userId, greenhouseId) {
 
 const GreenhouseAccess = require("../models/greenhouseAccess")
 
-schema.static.canEdit = function(departmentId, userId) {
+schema.statics.canEdit = function(departmentId, userId) {
     return new Promise((resolve, reject) => {
         UserAccount.verifyAdmin(userId).then(user => {
             resolve()
