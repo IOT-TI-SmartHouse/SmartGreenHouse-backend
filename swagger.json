@@ -63,22 +63,24 @@
         ],
         "description": "log in with username and password",
       "parameters": [{
-        "name": "username",
+        "name": "credentials",
         "in": "body",
         "required": true,
         "description": "username of user that we want to login",
         "schema": {
-          "type": "string"
-        }
-      },
-        {
-        "name": "password",
-        "in": "body",
-        "required": true,
-        "description": "password of user that we want to login",
-          "schema": {
-            "type": "string"
+          "type": "object",
+          "required": ["username", "password"],
+          "properties" : {
+            "username": {
+              "type": "string",
+              "default": "test"
+            },
+            "password": {
+              "type": "string",
+              "default": "kees"
+            }
           }
+        }
       }],
       "produces": [
         "application/json"
