@@ -17,7 +17,7 @@ schema.statics.canEdit = function (nodeId, userId) {
     return new Promise((resolve, reject) => {
         this.findById(nodeId).then(
             node => {
-                GreenhouseDepartment.canEdit(node.greenhouseDepartment).then(
+                GreenhouseDepartment.canEdit(node.greenhouseDepartment, userId).then(
                     _ => resolve(),
                     error => reject(error)
                 )
