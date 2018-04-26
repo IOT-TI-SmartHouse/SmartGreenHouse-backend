@@ -103,22 +103,49 @@
         }
       }
     },
-    "/node/lora/uplink": {
-      "parameters": [
-        {
-          "name": "whateveryoulike",
-          "in": "body",
-          "required": true,
-          "description": "just logging uplink data",
-          "type": "string"
-        }
-      ],
-      "post": {
-        "tags": ["Node/Lora"],
-        "summary": "log uplink data ",
+    "/user/get": {
+      "get": {
+        "tags": ["User"],
+        "description": "get user object with username and account",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "required": true,
+            "description": "json web token",
+            "schema": {
+              "type": "object",
+              "required": ["x-access-token"],
+              "properties": {
+                "x-access-token": {
+                  "type": "bearer"
+                }
+              }
+            }
+          },
+          {
+            "name": "credentials",
+            "in": "body",
+            "required": true,
+            "description": "credentials of user that we want to get",
+            "schema": {
+              "type": "object",
+              "required": ["username", "password"],
+              "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
-            "description": "data logged"
+            "description": "Succes"
           },
           "500": {
             "description": "failed "
@@ -128,7 +155,7 @@
     },
     "/greenhouse/register": {
       "post": {
-        "tags": ["Greenhouse/Register"],
+        "tags": ["GreenHouse"],
         "summary": "Creating of register an new greenhouse",
         "responses": {
           "200": {
@@ -173,6 +200,200 @@
           "type": "string"
         }
       ]
+    },
+    "/greenhouse/update": {
+      "post": {
+        "tags": ["GreenHouse"],
+        "summary": "Updating greenhouse",
+        "responses": {
+          "200": {
+            "description": "Updated greenhouse",
+            "schema": {
+              "properties": {
+                "greenhouse": {
+                  "type": "string",
+                  "description": "The id of the updated greenhouse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Greenhouse update failed, or not valid admin"
+          }
+        },
+        "description": "update greenhouse",
+        "parameters": [
+          {
+            "name": "credentials",
+            "in": "body",
+            "required": true,
+            "description": "credentials of greenhouse that we want to edit/update",
+            "schema": {
+              "type": "object",
+              "required": ["id", "name", "location"],
+              "properties": {
+                "id":{
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "location": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Succes"
+          },
+          "500": {
+            "description": "failed "
+          }
+        }
+      }
+    },
+    "/greenhouse/get": {
+      "get": {
+        "tags": ["GreenHouse"],
+        "summary": "get greenhouse",
+        "responses": {
+          "200": {
+            "description": "greenhouse",
+            "schema": {
+              "properties": {
+                "greenhouse": {
+                  "type": "string",
+                  "description": "The id of the greenhouse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Greenhouse get failed"
+          }
+        },
+        "description": "get greenhouse",
+        "parameters": [
+          {
+            "name": "credentials",
+            "in": "body",
+            "required": true,
+            "description": "credentials of greenhouse that we want to get",
+            "schema": {
+              "type": "object",
+              "required": ["id"],
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Succes"
+          },
+          "500": {
+            "description": "failed "
+          }
+        }
+      }
+    },
+    "/greenhouse/getAll": {
+      "get": {
+        "tags": ["GreenHouse"],
+        "summary": "get all greenhouses for user",
+        "responses": {
+          "200": {
+            "description": "greenhouses",
+            "schema": {
+              "properties": {
+                "greenhouse": {
+                  "type": "string",
+                  "description": "The ids of the greenhouses"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "get all failed"
+          }
+        },
+        "description": "get all greenhouses for user",
+        "parameters": [
+          {
+            "name": "credentials",
+            "in": "body",
+            "required": true,
+            "description": "id of the user that we want to get greenhouses for",
+            "schema": {
+              "type": "object",
+              "required": ["id"],
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Succes"
+          },
+          "500": {
+            "description": "failed "
+          }
+        }
+      }
+    },
+    "/node/lora/uplink": {
+      "parameters": [
+        {
+          "name": "whateveryoulike",
+          "in": "body",
+          "required": true,
+          "description": "just logging uplink data",
+          "type": "string"
+        }
+      ],
+      "post": {
+        "tags": ["Node/Lora"],
+        "summary": "log uplink data ",
+        "responses": {
+          "200": {
+            "description": "data logged"
+          },
+          "500": {
+            "description": "failed "
+          }
+        }
+      }
     }
   }
 }
