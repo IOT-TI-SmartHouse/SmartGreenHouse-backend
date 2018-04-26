@@ -35,9 +35,9 @@ router.post("/register", verifyToken, (req, res) => {
 });
 
 router.get("/getAll", verifyToken, (req, res) => {
+  
   const userId = req.headers["userId"];
   if (userId) {
-    console.log(userId)
     User.verifyAdmin(req.userId).then(
       user => {
         Greenhouse.all(userId).then(
@@ -51,7 +51,7 @@ router.get("/getAll", verifyToken, (req, res) => {
       err =>
         res
           .status(500)
-          .send("[Greenhouse::getAll] error getting greenhouses : " + err)
+          .send("[Greenhouse::getAll] error getting greenhouses : " + err ? err : "no admin rights")
     );
   } else {
     Greenhouse.all(req.userId).then(
