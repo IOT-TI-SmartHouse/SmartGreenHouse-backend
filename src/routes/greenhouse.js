@@ -37,10 +37,11 @@ router.post("/register", verifyToken, (req, res) => {
 router.get("/getAll", verifyToken, (req, res) => {
   const userId = req.headers["userId"];
   if (userId) {
+    console.log(userId)
     User.verifyAdmin(req.userId).then(
       user => {
         Greenhouse.all(userId).then(
-          greenhouses => res.status(200).send({ greenhouses: greenhouses }),
+          greenhouses => res.status(200).send({ user: userId, greenhouses: greenhouses }),
           err =>
             res
               .status(500)
@@ -54,7 +55,7 @@ router.get("/getAll", verifyToken, (req, res) => {
     );
   } else {
     Greenhouse.all(req.userId).then(
-      greenhouses => res.status(200).send({ greenhouses: greenhouses }),
+      greenhouses => res.status(200).send({ user: req.userId, greenhouses: greenhouses }),
       err =>
         res
           .status(500)
