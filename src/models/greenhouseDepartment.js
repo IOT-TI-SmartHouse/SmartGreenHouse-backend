@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 var schema = new Schema({
     greenhouse: {type: Schema.Types.ObjectId, required: true, ref: "Greenhouse"},
+    active: {type: boolean, required: true, default: true}
 },
 {
     timestamps: true
@@ -15,7 +16,7 @@ schema.statics.all = function(userId, greenhouseId) {
     return new Promise((resolve, reject) => {
         UserAccount.verifyAdmin(userId).then(user => {
             console.log("user is admin, returning all greenhousesdepartments")
-            this.find({greenhouse: greenhouseId}, (error, greenhouses) => {
+            this.find({greenhouse: greenhouseId, active: true}, (error, greenhouses) => {
                 if (error) {
                     reject(error);
                 }
@@ -31,7 +32,7 @@ schema.statics.all = function(userId, greenhouseId) {
                         if (!access) {
                             reject()
                         }else{
-                            this.find({greenhouse: greenhouseId}, (error, greenhouses) => {
+                            this.find({greenhouse: greenhouseId, active: true}, (error, greenhouses) => {
                                 if (error) {
                                     reject(error);
                                 }
