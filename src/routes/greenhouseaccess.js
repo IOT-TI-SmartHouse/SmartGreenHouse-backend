@@ -46,19 +46,18 @@ router.post("/delete", verifyToken, function(req, res) {
     _ => {
       if (req.body.id) {
         GreenhouseAccess.findByIdAndRemove(req.body.id, (error, _) => {
-            if (error) {
-                res
-                  .status(500)
-                  .send(
-                    "[GreenhouseAccess::delete] error deleting access : " + error
-                      ? error
-                      : "no admin rights"
-                  );
-              } else {
-                res.status(200).send({ deleted: true });
-              }
+          if (error) {
+            res
+              .status(500)
+              .send(
+                "[GreenhouseAccess::delete] error deleting access : " + error
+                  ? error
+                  : "no admin rights"
+              );
+          } else {
+            res.status(200).send({ deleted: true });
+          }
         });
-        res.status(200).send({ deleted: true });
       } else if (req.body.user && req.body.greenhouse) {
         GreenhouseAccess.deleteOne(
           { greenhouse: req.body.greenhouse, user: req.body.user },
@@ -77,7 +76,7 @@ router.post("/delete", verifyToken, function(req, res) {
           }
         );
       } else {
-          res.status(200).send({ deleted: false });
+        res.status(200).send({ deleted: false });
       }
     },
     error =>
