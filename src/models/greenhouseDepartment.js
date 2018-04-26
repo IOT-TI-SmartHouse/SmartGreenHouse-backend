@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 var schema = new Schema({
     greenhouse: {type: Schema.Types.ObjectId, required: true, ref: "Greenhouse"},
-    active: {type: boolean, required: true, default: true}
+    active: {type: Boolean, required: true, default: true}
 },
 {
     timestamps: true
