@@ -23,9 +23,9 @@ router.post("/register", verifyToken, (req, res) => {
 });
 
 router.get("/getAll", verifyToken, (req, res) => {
-    GreenhouseDepartment.canEdit(req.headers["greenhouseDepartment"], req.userId).then(
+    GreenhouseDepartment.canEdit(req.headers["greenhousedepartment"], req.userId).then(
         _ => {
-            SensorNode.find({greenhouseDepartment: req.headers["greenhouseDepartment"]}, (error, nodes) => {
+            SensorNode.find({greenhouseDepartment: req.headers["greenhousedepartment"]}, (error, nodes) => {
                 if(error){
                     res.status(500).send("[SensorNode::getAll] error getting SensorNode : " + error)
                 }else{
