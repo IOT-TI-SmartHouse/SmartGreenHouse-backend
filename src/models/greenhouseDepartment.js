@@ -11,7 +11,7 @@ var schema = new Schema({
 });
 
 
-const UserAccount = require("userAccount");
+const UserAccount = require("../models/userAccount");
 
 schema.statics.all = function(userId, greenhouseId) {
     return new Promise((resolve, reject) => {
