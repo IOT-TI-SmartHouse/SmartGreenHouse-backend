@@ -1,8 +1,8 @@
 const user = require('./src/routes/users')
 const lora = require('./src/routes/lora')
 const greenHouse = require('./src/routes/greenhouse')
-const greenHouseAccess = require('./src/routes/greenhouseAccess')
-const greenHouseDepartment = require('./src/routes/greenhouseDepartment')
+const greenHouseAccess = require('./src/routes/greenhouseaccess')
+const greenHouseDepartment = require('./src/routes/greenhousedepartment')
 
 const express = require('express');
 const path = require('path');
