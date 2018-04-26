@@ -47,9 +47,8 @@ router.get("/getAll", verifyToken, (req, res) => {
 router.post("/update", verifyToken, (req, res) => {
   User.verifyAdmin(req.userId).then(
     success => {
-      Greenhouse.update(
+      Greenhouse.find({_id: req.body.id}).update(
         {
-          id: req.body.id,
           name: req.body.name,
           location: req.body.location
         },
