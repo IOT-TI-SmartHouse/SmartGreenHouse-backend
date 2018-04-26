@@ -47,7 +47,7 @@ schema.statics.all = function(userId, greenhouseId) {
     })
 };
 
-const GreenhouseAccess = require("greenhouseAccess")
+const GreenhouseAccess = require("../models/greenhouseAccess")
 
 schema.static.hasRights = function(departmentId, userId) {
     return new Promise((resolve, reject) => {
