@@ -46,7 +46,7 @@ router.post("/delete", verifyToken, function(req, res) {
   User.verifyAdmin(req.userId).then(
     _ => {
       if (req.body.id) {
-        GreenhouseDepartment.findByIdAndRemove(req.body.id, (error, _) => {
+        GreenhouseDepartment.findByIdAndUpdate(req.body.id, {active: false}, (error, _) => {
           if (error) {
             res
               .status(500)
