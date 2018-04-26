@@ -1,6 +1,8 @@
 const user = require('./src/routes/users')
 const lora = require('./src/routes/lora')
 const greenHouse = require('./src/routes/greenhouse')
+const greenHouseAccess = require('./src/routes/greenhouseaccess')
+
 const express = require('express');
 const path = require('path');
 const logger = require('morgan');
@@ -31,6 +33,7 @@ repository.connect();
 app.use('/user', user);
 app.use('/node', lora);
 app.use('/greenhouse', greenHouse);
+app.use('/greenhouseaccess', greenHouseAccess)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
