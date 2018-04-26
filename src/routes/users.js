@@ -66,9 +66,9 @@ router.get('/me', verifyToken, (req, res) => {
     });
 });
 
-router.all('*', verifyToken, (req, res) => {
-    res.status(500);
-    res.json({});
-});
+// router.all('*', verifyToken, (req, res) => {
+//     res.status(500);
+//     res.json({});
+// });
 
 module.exports = router;
