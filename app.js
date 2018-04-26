@@ -1,8 +1,8 @@
 const user = require('./src/routes/users')
 const lora = require('./src/routes/lora')
 const greenHouse = require('./src/routes/greenhouse')
-const greenHouseAccess = require('./src/routes/greenhouseaccess')
-const greenHouseDepartment = require('./src/routes/greenhousedepartment')
+const greenHouseAccess = require('./src/routes/access')
+const greenHouseDepartment = require('./src/routes/department')
 const sensorNode = require('./src/routes/sensornode')
 const sensorData = require('./src/routes/sensordata')
 
