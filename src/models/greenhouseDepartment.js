@@ -10,7 +10,7 @@ var schema = new Schema({
 });
 
 
-const UserAccount = require("../models/userAccount");
+const UserAccount = require("userAccount");
 
 schema.statics.all = function(userId, greenhouseId) {
     return new Promise((resolve, reject) => {
@@ -45,5 +45,35 @@ schema.statics.all = function(userId, greenhouseId) {
         })
     })
 };
+
+const GreenhouseAccess = require("greenhouseAccess")
+
+schema.static.hasRights = function(departmentId, userId) {
+    return new Promise((resolve, reject) => {
+        UserAccount.verifyAdmin(userId).then(user => {
+            resolve()
+        }, error => {
+            if(!error) {
+                this.findById(departmentId).then(
+                    department => {
+                        GreenhouseAccess.findOne({greenhouse:department.greenhouse}).then(
+                            access => {
+                                if (access) {
+                                    resolve();
+                                } else {
+                                    reject();
+                                }
+                            },
+                            error => reject(error)
+                        )
+                    },
+                    error => reject(error)
+                )
+            }else{
+                reject(error)
+            }
+        })
+    })
+}
 
 module.exports = mongoose.model('GreenhouseDepartment', schema);
