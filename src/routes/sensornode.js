@@ -6,19 +6,24 @@ const SensorNode = require("../models/sensorNode")
 const GreenhouseDepartment = require("../models/greenhouseDepartment")
 
 router.post("/register", verifyToken, (req, res) => {
-    SensorNode.create({
-        name:req.body.name,
-        greenhouseDepartment:req.body.greenhouseDepartment,
-        latitude:req.body.latitude,
-        longitude:req.body.longitude
-    }).then(
-        node => res.status(200).send({id:node._id}),
+    GreenhouseDepartment.canEdit(req.body.greenhouseDepartment, req.userId).then(
+        _ => {
+            SensorNode.create({
+                name:req.body.name,
+                greenhouseDepartment:req.body.greenhouseDepartment,
+                latitude:req.body.latitude,
+                longitude:req.body.longitude
+            }).then(
+                node => res.status(200).send({id:node._id}),
+                error => res.status(500).send("[SensorNode::register] error creating SensorNode : " + error)
+            )
+        }, 
         error => res.status(500).send("[SensorNode::register] error creating SensorNode : " + error)
     )
 });
 
 router.get("/getAll", verifyToken, (req, res) => {
-    GreenhouseDepartment.hasRights(req.headers["greenhouseDepartment"], req.userId).then(
+    GreenhouseDepartment.canEdit(req.headers["greenhouseDepartment"], req.userId).then(
         _ => {
             SensorNode.find({greenhouseDepartment: req.headers["greenhouseDepartment"]}, (error, nodes) => {
                 if(error){
@@ -33,7 +38,7 @@ router.get("/getAll", verifyToken, (req, res) => {
 });
 
 router.post("/update", verifyToken, (req, res) => {
-    GreenhouseDepartment.hasRights(req.body.greenhouseDepartment, req.userId).then(
+    GreenhouseDepartment.canEdit(req.body.greenhouseDepartment, req.userId).then(
         _ => {
             SensorNode.findByIdAndUpdate(req.body.id, {
                 name:req.body.name,
