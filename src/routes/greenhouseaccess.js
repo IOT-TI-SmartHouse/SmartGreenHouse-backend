@@ -45,7 +45,19 @@ router.post("/delete", verifyToken, function(req, res) {
   User.verifyAdmin(req.userId).then(
     _ => {
       if (req.body.id) {
-        GreenhouseAccess.findByIdAndRemove(req.body.id);
+        GreenhouseAccess.findByIdAndRemove(req.body.id, (error, _) => {
+            if (error) {
+                res
+                  .status(500)
+                  .send(
+                    "[GreenhouseAccess::delete] error deleting access : " + error
+                      ? error
+                      : "no admin rights"
+                  );
+              } else {
+                res.status(200).send({ deleted: true });
+              }
+        });
         res.status(200).send({ deleted: true });
       } else if (req.body.user && req.body.greenhouse) {
         GreenhouseAccess.deleteOne(
