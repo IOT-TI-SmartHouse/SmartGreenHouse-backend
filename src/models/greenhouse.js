@@ -54,6 +54,8 @@ schema.statics.all = function(userId) {
                     }
                     resolve(convered_greenhouses);
                 });
+            } else {
+                reject(error);
             }
         })
     })
