@@ -3,6 +3,8 @@ const lora = require('./src/routes/lora')
 const greenHouse = require('./src/routes/greenhouse')
 const greenHouseAccess = require('./src/routes/greenhouseaccess')
 const greenHouseDepartment = require('./src/routes/greenhousedepartment')
+const sensorNode = require('./src/routes/sensornode')
+const sensorData = require('./src/routes/sensordata')
 
 const express = require('express');
 const path = require('path');
@@ -36,6 +38,8 @@ app.use('/node', lora);
 app.use('/greenhouse', greenHouse);
 app.use('/greenhouseaccess', greenHouseAccess);
 app.use('/greenhousedepartment', greenHouseDepartment);
+app.use('/sensornode', sensorNode);
+app.use('/sensordata', sensorData);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
