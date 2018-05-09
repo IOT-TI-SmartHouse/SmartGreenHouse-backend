@@ -15,7 +15,6 @@ router.post('/lora/uplink', verifyToken, (req, res) => {
     if(error || !node){
       res.status(500).send("Serial/node not found!");
       console.log("Node " + hardwareId + " not found!")
-      // TODO: Add node ?
     }else {
       for(var item in payload) {
         console.log("Received data", item, payload[item])

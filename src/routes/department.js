@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.post("/register", verifyToken, function(req, res) {
   User.verifyAdmin(req.userId).then(
-    _ => {
+    () => {
         Greenhouse.findById(req.body.greenhouse, (error, greenhouse) => {
             if (error) {
             res
@@ -44,7 +44,7 @@ router.post("/register", verifyToken, function(req, res) {
 });
 router.post("/delete", verifyToken, function(req, res) {
   User.verifyAdmin(req.userId).then(
-    _ => {
+    () => {
       if (req.body.id) {
         GreenhouseDepartment.findByIdAndUpdate(req.body.id, {active: false}, (error, _) => {
           if (error) {

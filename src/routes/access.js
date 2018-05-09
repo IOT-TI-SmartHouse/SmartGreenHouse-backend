@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post("/register", verifyToken, function(req, res) {
   User.verifyAdmin(req.userId).then(
-    _ => {
+    () => {
       User.findById(req.body.user, (error, user) => {
         if (error) {
           res
@@ -43,7 +43,7 @@ router.post("/register", verifyToken, function(req, res) {
 });
 router.post("/delete", verifyToken, function(req, res) {
   User.verifyAdmin(req.userId).then(
-    _ => {
+    () => {
       if (req.body.id) {
         GreenhouseAccess.findByIdAndRemove(req.body.id, (error, _) => {
           if (error) {

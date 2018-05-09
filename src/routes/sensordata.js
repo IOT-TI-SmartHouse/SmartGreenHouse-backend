@@ -6,7 +6,7 @@ const Sensordata = require("../models/sensorData")
 
 router.post("/register", verifyToken, (req, res) => {
     SensorNode.canEdit(req.body.node, req.userId).then(
-        _ => {
+        () => {
             Sensordata.create({
                 sensorType: req.body.sensorType,
                 value: req.body.value,
@@ -20,7 +20,7 @@ router.post("/register", verifyToken, (req, res) => {
 
 router.get("/getAll", verifyToken, (req, res) => {
     SensorNode.canEdit(req.headers["node"], req.userId).then(
-        _ => {
+        () => {
             Sensordata.find({node: req.headers["node"]}).then(
                 data => res.status(200).send({data:data}),
                 error => res.status(500).send("[Sensordata::getAll] error getting Sensordata : " + error)

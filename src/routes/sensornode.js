@@ -7,7 +7,7 @@ const GreenhouseDepartment = require("../models/greenhouseDepartment")
 
 router.post("/register", verifyToken, (req, res) => {
     GreenhouseDepartment.canEdit(req.body.greenhouseDepartment, req.userId).then(
-        _ => {
+        () => {
             SensorNode.create({
                 name:req.body.name,
                 greenhouseDepartment:req.body.greenhouseDepartment,
@@ -24,7 +24,7 @@ router.post("/register", verifyToken, (req, res) => {
 
 router.get("/getAll", verifyToken, (req, res) => {
     GreenhouseDepartment.canEdit(req.headers["greenhousedepartment"], req.userId).then(
-        _ => {
+        () => {
             SensorNode.find({greenhouseDepartment: req.headers["greenhousedepartment"]}, (error, nodes) => {
                 if(error){
                     res.status(500).send("[SensorNode::getAll] error getting SensorNode : " + error)
@@ -39,7 +39,7 @@ router.get("/getAll", verifyToken, (req, res) => {
 
 router.post("/update", verifyToken, (req, res) => {
     GreenhouseDepartment.canEdit(req.body.greenhouseDepartment, req.userId).then(
-        _ => {
+        () => {
             SensorNode.findByIdAndUpdate(req.body.id, {
                 name:req.body.name,
                 greenhouseDepartment:req.body.greenhouseDepartment,
