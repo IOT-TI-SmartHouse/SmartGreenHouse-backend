@@ -14,8 +14,11 @@ const bodyParser = require('body-parser');
 const repository = require('./src/repository/repository')
 const swaggerUi = require('swagger-ui-express')
 const swaggerDocument = require('./swagger.json');
+const cors = require('cors');
 
 const app = express();
+
+app.use(cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -34,11 +37,11 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 repository.connect();
 
 // Allow cross origin requests
-app.all('/*', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "*");
-    next();
-  });
+// app.all('/*', function(req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Headers", "*");
+//     next();
+//   });
 
 app.use('/user', user);
 app.use('/node', lora);
@@ -47,8 +50,6 @@ app.use('/greenhouseaccess', greenHouseAccess);
 app.use('/greenhousedepartment', greenHouseDepartment);
 app.use('/sensornode', sensorNode);
 app.use('/sensordata', sensorData);
-
-
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
