@@ -61,4 +61,22 @@ schema.statics.all = function(userId) {
     })
 };
 
+schema.statics.allUser = function(userId, greenhouseId) {
+    return new Promise((resolve, reject) => {
+        UserAccount.verifyAdmin(userId).then(user => {
+            GreenhouseAccess.find({greenhouseId: greenhouseId }).populate("user").exec((error, users) => {
+                if (error) {
+                    reject(error);
+                }
+                resolve(users);
+            })
+        }, error => {
+            if(!error) { // user is no admin
+                reject('no admin')
+            } else {
+                reject(error);
+            }
+        })
+    })
+}
 module.exports = mongoose.model("Greenhouse", schema);

@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 var schema = new Schema({
     name: { type: String, required: true },
     greenhouseDepartment: {type: Schema.Types.ObjectId, required: true, ref:"GreenhouseDepartment"},
+    hardwareSerial: {type: String, default: null},
     latitude: {type: Number},
     longitude: {type: Number}
 },

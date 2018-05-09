@@ -65,6 +65,31 @@ router.get("/getAll", verifyToken, (req, res) => {
   }
 });
 
+router.get("/getAllAccess", verifyToken, (req, res) => {
+  const greenhouseId = req.headers["greenhouseid"];
+  if (greenhouseId) {
+    User.verifyAdmin(req.userId).then(
+      user => {
+        Greenhouse.allUser(req.userId, greenhouseId).then(
+          users => res.status(200).send({ greenhouse: greenhouseId, users: users }),
+          err =>
+            res
+              .status(500)
+              .send("[Greenhouse::getAllAccess] error getting users : " + err)
+        );
+      },
+      err =>
+        res
+          .status(500)
+          .send("[Greenhouse::getAllAccess] error getting users : " + err ? err : "no admin rights")
+    );
+  } else {
+    res
+      .status(500)
+      .send("[Greenhouse::getAllAccess] error getting greenhouses")
+  }
+});
+
 router.post("/update", verifyToken, (req, res) => {
   User.verifyAdmin(req.userId).then(
     success => {

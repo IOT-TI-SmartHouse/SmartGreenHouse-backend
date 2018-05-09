@@ -291,6 +291,43 @@
         ],
         "produces": ["application/json"]
       }
+    },"/greenhouse/getAllAccess": {
+      "get": {
+        "tags": ["GreenHouse"],
+        "summary": "get all users that have access to greenhouse",
+        "responses": {
+          "200": {
+            "description": "users",
+            "schema": {
+              "properties": {
+                "greenhouse": {
+                  "type": "string",
+                  "description": "The ids of the greenhouses"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "get all failed"
+          }
+        },
+        "description": "get all users that have access to greenhouse",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "greenhouseId",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": ["application/json"]
+      }
     },
     "/greenhouseaccess/register": {
       "post": {
