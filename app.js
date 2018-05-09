@@ -33,6 +33,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 repository.connect();
 
+// Allow cross origin requests
+app.all('/*', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next();
+  });
+
 app.use('/user', user);
 app.use('/node', lora);
 app.use('/greenhouse', greenHouse);
@@ -40,6 +47,8 @@ app.use('/greenhouseaccess', greenHouseAccess);
 app.use('/greenhousedepartment', greenHouseDepartment);
 app.use('/sensornode', sensorNode);
 app.use('/sensordata', sensorData);
+
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
