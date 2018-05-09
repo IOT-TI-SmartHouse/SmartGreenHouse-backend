@@ -13,12 +13,19 @@ router.post('/lora/uplink', verifyToken, (req, res) => {
 
   SensorNode.findOne({hardwareSerial: hardwareId}, (error, node) => {
     if(error || !node){
-      res.status(500).send("Serial not found!");
+      res.status(500).send("Serial/node not found!");
+      // TODO: Add node ?
+    }else {
+      for(var item in payload) {
+        console.log("Received data", item, payload[item])
+        SensorData.create({
+          sensorType: item,
+          value: payload[item],
+          node: node._id
+        });
+      }
+      res.status(200).send("Success!")
     }
-    for(var item in payload) {
-      console.log(item, payload[item])
-    }
-    res.status(200).send("Success!")
   });
 });
 
