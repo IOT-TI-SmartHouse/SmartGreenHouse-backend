@@ -611,6 +611,9 @@
               "type": "object",
               "required": true,
               "properties": {
+                "id": {
+                  "type": "string"
+                },
                 "name": {
                   "type": "string"
                 },
@@ -621,53 +624,6 @@
                   "type": "string"
                 },
                 "longitude": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          {
-            "name": "x-access-token",
-            "in": "header",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "produces": ["application/json"]
-      }
-    },
-    "/sensornode/delete": {
-      "post": {
-        "tags": ["SensorNode"],
-        "summary": "Delete sensornode",
-        "responses": {
-          "200": {
-            "description": "Deleted sensornode",
-            "schema": {
-              "properties": {
-                "greenhousedepartement": {
-                  "type": "string",
-                  "description": "The id of the deleted sensornode"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "sensornode delete failed."
-          }
-        },
-        "description": "Delete sensornode",
-        "parameters": [
-          {
-            "name": "credentials",
-            "in": "body",
-            "required": true,
-            "description": "credentials of sensornode that we want to delete",
-            "schema": {
-              "type": "object",
-              "required": ["id"],
-              "properties": {
-                "id":{
                   "type": "string"
                 }
               }
@@ -801,7 +757,7 @@
             "type": "string"
           },
           {
-            "name": "sensornode",
+            "name": "node",
             "in": "header",
             "required": false,
             "type": "string"
@@ -810,7 +766,6 @@
         "produces": ["application/json"]
       }
     },
-
 
 
     "/node/lora/uplink": {

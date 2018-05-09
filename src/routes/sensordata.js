@@ -19,9 +19,9 @@ router.post("/register", verifyToken, (req, res) => {
 });
 
 router.get("/getAll", verifyToken, (req, res) => {
-    SensorNode.canEdit(req.body.node, req.userId).then(
+    SensorNode.canEdit(req.headers["node"], req.userId).then(
         _ => {
-            Sensordata.find({node: req.body.node}).then(
+            Sensordata.find({node: req.headers["node"]}).then(
                 data => res.status(200).send({data:data}),
                 error => res.status(500).send("[Sensordata::getAll] error getting Sensordata : " + error)
             )
