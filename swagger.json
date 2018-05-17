@@ -153,6 +153,38 @@
         }
       }
     },
+    "/user/getAll": {
+      "get": {
+        "tags": ["User"],
+        "description": "get users",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "required": true,
+            "description": "json web token",
+            "schema": {
+              "type": "object",
+              "required": ["x-access-token"],
+              "properties": {
+                "x-access-token": {
+                  "type": "bearer"
+                }
+              }
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Succes"
+          },
+          "500": {
+            "description": "failed "
+          }
+        }
+      }
+    },
     "/greenhouse/register": {
       "post": {
         "tags": ["GreenHouse"],

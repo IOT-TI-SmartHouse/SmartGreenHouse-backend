@@ -75,4 +75,27 @@ router.get("/me", verifyToken, (req, res) => {
   );
 });
 
+router.get("/getAll", verifyToken, (req, res) => {
+  User.verifyAdmin(req.userId).then(
+    user => {
+      const user_projection = {
+        __v: false,
+        password: false,
+        updatedAt: false
+      }
+      User.find({}, user_projection).then(users => {
+        return res.status(200).send({success: true, users: users})
+      },
+      error => {
+        console.error(error)
+        return res.status(500).send("Error in getting all users");
+      })
+    },
+    err =>
+      res
+        .status(500)
+        .send("[Users::getAll] error getting users : " + err ? err : "no admin rights")
+  );
+})
+
 module.exports = router;
