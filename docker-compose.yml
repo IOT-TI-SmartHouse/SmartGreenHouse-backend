@@ -7,10 +7,13 @@ services:
     environment: 
       - MONGO_USERNAME=root
       - MONGO_PASSWORD=aofoiew031fefedomasd
-      - MONGO_HOST=127.0.0.1
+      - MONGO_HOST=10.5.0.2
       - MONGO_DATABASE=smartgreenhouse
     ports:
       - "3000:3000"
+    networks:
+      vpcbr:
+        ipv4_address: 10.5.0.3
     links:
       - mongo
   mongo:
@@ -25,4 +28,14 @@ services:
       - ./data:/data/db
     ports:
       - "27017:27017"
+    networks:
+      vpcbr:
+        ipv4_address: 10.5.0.2
     command: mongod --auth
+networks:
+  vpcbr:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 10.5.0.0/16
+         gateway: 10.5.0.1
