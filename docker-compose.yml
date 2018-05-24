@@ -5,6 +5,9 @@ services:
     restart: always
     ports:
       - 443:443
+    networks:
+      vpcbr:
+        ipv4_address: 10.5.0.4
   app:
     container_name: app
     restart: on-failure:5 
