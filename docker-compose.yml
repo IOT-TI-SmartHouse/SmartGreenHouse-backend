@@ -5,6 +5,8 @@ services:
     restart: always
     ports:
       - 443:443
+    volumes:
+      - /var/www:/var/www
     networks:
       vpcbr:
         ipv4_address: 10.5.0.4
