@@ -33,7 +33,7 @@ node {
             sh 'docker-compose -p smartgreenhouse up --no-build -d --force-recreate'
         }
         stage("remove old images") {
-            sh 'docker rmi $(docker images --filter "dangling=true" -q --no-trunc)'
+            sh 'docker image prune -f'
         }
        }
 
