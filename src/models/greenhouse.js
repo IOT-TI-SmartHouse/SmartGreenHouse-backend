@@ -65,11 +65,14 @@ schema.statics.allUser = function(userId, greenhouseId) {
     console.log("Get all users of", greenhouseId)
     return new Promise((resolve, reject) => {
         UserAccount.verifyAdmin(userId).then(user => {
-            GreenhouseAccess.find({greenhouse: greenhouseId }).populate("user").exec((error, users) => {
+            GreenhouseAccess.find({greenhouse: greenhouseId }).populate("user", { password: 0 }).exec((error, users) => {
                 if (error) {
                     reject(error);
+                    return;
                 }
-                resolve(users);
+                UserAccount.find({isAdmin: 1}, { password: 0 }).then(admin_users => {
+                    resolve(users.concat(admin_users));
+                }, error => reject(error))
             })
         }, error => {
             if(!error) { // user is no admin
