@@ -8,7 +8,7 @@ services:
     volumes:
       - /var/www:/var/www
     networks:
-      vpcbr:
+      external:
         ipv4_address: 10.5.0.4
   app:
     container_name: app
@@ -22,7 +22,7 @@ services:
     ports:
       - "3000:3000"
     networks:
-      vpcbr:
+      external:
         ipv4_address: 10.5.0.3
     links:
       - mongo
@@ -39,13 +39,9 @@ services:
     ports:
       - "27017:27017"
     networks:
-      vpcbr:
+      external:
         ipv4_address: 10.5.0.2
     command: mongod --auth
 networks:
-  vpcbr:
-    driver: bridge
-    ipam:
-     config:
-       - subnet: 10.5.0.0/16
-         gateway: 10.5.0.1
+  external:
+      name: internal-nginx
