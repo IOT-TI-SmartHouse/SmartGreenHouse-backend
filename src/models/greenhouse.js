@@ -70,8 +70,12 @@ schema.statics.allUser = function(userId, greenhouseId) {
                     reject(error);
                     return;
                 }
+                const solved_users = [];
+                for(let user of users){
+                    solved_users.push(user.user)
+                }
                 UserAccount.find({isAdmin: 1}, { password: 0 }).then(admin_users => {
-                    resolve(users.concat(admin_users));
+                    resolve(solved_users.concat(admin_users));
                 }, error => reject(error))
             })
         }, error => {
