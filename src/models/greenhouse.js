@@ -62,9 +62,10 @@ schema.statics.all = function(userId) {
 };
 
 schema.statics.allUser = function(userId, greenhouseId) {
+    console.log("Get all users of", greenhouseId)
     return new Promise((resolve, reject) => {
         UserAccount.verifyAdmin(userId).then(user => {
-            GreenhouseAccess.find({greenhouseId: greenhouseId }).populate("user").exec((error, users) => {
+            GreenhouseAccess.find({greenhouse: greenhouseId }).populate("user").exec((error, users) => {
                 if (error) {
                     reject(error);
                 }
