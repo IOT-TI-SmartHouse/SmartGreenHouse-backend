@@ -7,13 +7,18 @@ const Sensordata = require("../models/sensorData")
 router.post("/register", verifyToken, (req, res) => {
     SensorNode.canEdit(req.body.node, req.userId).then(
         () => {
-            Sensordata.create({
-                sensorType: req.body.sensorType,
-                value: req.body.value,
-                node: req.body.node
-            }).then(
-                data => res.status(200).send({id:data._id})
-            )
+            SensorNode.find({hardwareSerial: req.body.node}).then(
+                node => {
+                    Sensordata.create({
+                        sensorType: req.body.sensorType,
+                        value: req.body.value,
+                        node: node._id
+                    }).then(
+                        data => res.status(200).send({id:data._id})
+                    )
+                }, 
+                error => console.error(error)
+            );
         }
     )
 });
