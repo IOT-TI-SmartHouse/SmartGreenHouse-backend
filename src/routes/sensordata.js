@@ -5,22 +5,33 @@ const SensorNode = require("../models/sensorNode")
 const Sensordata = require("../models/sensorData")
 
 router.post("/register", verifyToken, (req, res) => {
-    SensorNode.canEdit(req.body.node, req.userId).then(
-        () => {
-            SensorNode.find({hardwareSerial: req.body.node}).then(
-                node => {
+    SensorNode.find({hardwareSerial: req.body.node}).then(
+        node => {
+            SensorNode.canEdit(node._id, req.userId).then(
+                () => {
                     Sensordata.create({
                         sensorType: req.body.sensorType,
                         value: req.body.value,
                         node: node._id
                     }).then(
-                        data => res.status(200).send({id:data._id})
+                        data => res.status(200).send({id:data._id}),
+                        error => {
+                            console.error(error);
+                            res.status(502).send("failed, cannot search node");
+                        }
                     )
-                }, 
-                error => console.error(error)
-            );
+                },
+                error => {
+                    console.error(error);
+                    res.status(502).send("failed, cannot edit");
+                }
+            )
+        }, 
+        error => {
+            console.error(error);
+            res.status(502).send("failed, cannot search node");
         }
-    )
+    );
 });
 
 router.get("/getAll", verifyToken, (req, res) => {
