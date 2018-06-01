@@ -5,28 +5,31 @@ const SensorNode = require("../models/sensorNode")
 const Sensordata = require("../models/sensorData")
 
 router.post("/register", verifyToken, (req, res) => {
-    SensorNode.find({hardwareSerial: req.body.node}).then(
+    SensorNode.find({
+        hardwareSerial: req.body.node
+    }).then(
         node => {
-            SensorNode.canEdit(node._id, req.userId).then(
-                () => {
-                    Sensordata.create({
-                        sensorType: req.body.sensorType,
-                        value: req.body.value,
-                        node: node._id
-                    }).then(
-                        data => res.status(200).send({id:data._id}),
-                        error => {
-                            console.error(error);
-                            res.status(502).send("failed, cannot search node");
-                        }
-                    )
-                },
-                error => {
-                    console.error(error);
-                    res.status(502).send("failed, cannot edit");
-                }
-            )
-        }, 
+            if (node) {
+                console.log("Found:", node);
+                Sensordata.create({
+                    sensorType: req.body.sensorType,
+                    value: req.body.value,
+                    node: node._id
+                }).then(
+                    data => res.status(200).send({
+                        id: data._id
+                    }),
+                    error => {
+                        console.error(error);
+                        res.status(502).send("failed, cannot create data");
+                    }
+                )
+            } else {
+                console.log("Not found!")
+                res.status(404).send("node not found");
+
+            }
+        },
         error => {
             console.error(error);
             res.status(502).send("failed, cannot search node");
@@ -37,8 +40,12 @@ router.post("/register", verifyToken, (req, res) => {
 router.get("/getAll", verifyToken, (req, res) => {
     SensorNode.canEdit(req.headers["node"], req.userId).then(
         () => {
-            Sensordata.find({node: req.headers["node"]}).then(
-                data => res.status(200).send({data:data}),
+            Sensordata.find({
+                node: req.headers["node"]
+            }).then(
+                data => res.status(200).send({
+                    data: data
+                }),
                 error => res.status(500).send("[Sensordata::getAll] error getting Sensordata : " + error)
             )
         },
