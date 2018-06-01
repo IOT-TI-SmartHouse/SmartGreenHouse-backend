@@ -11,16 +11,18 @@ router.post("/register", verifyToken, (req, res) => {
         node => {
             if (node) {
                 console.log("Found:", node);
-                Sensordata.create({
+                data = {
+                    node: node._id,
                     sensorType: req.body.sensorType,
-                    value: req.body.value,
-                    node: node._id
-                }).then(
+                    value: req.body.value
+                }
+                Sensordata.create(data).then(
                     data => res.status(200).send({
                         id: data._id
                     }),
                     error => {
                         console.error(error);
+                        console.log(data);
                         res.status(502).send("failed, cannot create data");
                     }
                 )
