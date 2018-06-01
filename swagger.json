@@ -637,6 +637,9 @@
               },
               "longitude": {
                 "type": "string"
+              },
+              "hardwareSerial": {
+                "type": "string"
               }
             }
           }

@@ -11,6 +11,7 @@ router.post("/register", verifyToken, (req, res) => {
             SensorNode.create({
                 name:req.body.name,
                 greenhouseDepartment:req.body.greenhouseDepartment,
+                hardwareSerial: req.body.hardwareSerial,
                 latitude:req.body.latitude,
                 longitude:req.body.longitude
             }).then(
