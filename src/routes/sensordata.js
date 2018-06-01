@@ -5,7 +5,7 @@ const SensorNode = require("../models/sensorNode")
 const Sensordata = require("../models/sensorData")
 
 router.post("/register", verifyToken, (req, res) => {
-    SensorNode.find({
+    SensorNode.findOne({
         hardwareSerial: req.body.node
     }).then(
         node => {
