@@ -59,7 +59,7 @@ router.post("/delete", verifyToken, function(req, res) {
           }
         });
       } else if (req.body.user && req.body.greenhouse) {
-        GreenhouseAccess.deleteOne(
+        GreenhouseAccess.remove(
           { greenhouse: req.body.greenhouse, user: req.body.user },
           (error, _) => {
             if (error) {
