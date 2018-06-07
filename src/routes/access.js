@@ -73,6 +73,14 @@ router.post("/delete", verifyToken, function(req, res) {
                 );
             } else {
               console.log(found);
+              if(!found) {
+                console.log(req.body)
+                res
+                  .status(500)
+                  .send(
+                    "Access not found!")
+
+              }
               found.remove(function (error) {
                 if(error){
                   console.log(error);
