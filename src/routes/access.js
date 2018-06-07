@@ -61,7 +61,7 @@ router.post("/delete", verifyToken, function(req, res) {
       } else if (req.body.user && req.body.greenhouse) {
         GreenhouseAccess.remove(
           { greenhouse: req.body.greenhouse, user: req.body.user },
-          (error, _) => {
+          error => {
             if (error) {
               res
                 .status(500)
