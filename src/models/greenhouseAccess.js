@@ -11,6 +11,6 @@ var schema = new Schema({
 
 
 
+schema.index({ user: 1, greenhouse: 1}, { unique: true });
 const model = mongoose.model('GreenhouseAccess', schema);
-model.index({ user: 1, greenhouse: 1}, { unique: true });
 module.exports = model;
