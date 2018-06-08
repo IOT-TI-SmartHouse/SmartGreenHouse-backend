@@ -45,7 +45,8 @@ router.post("/update", verifyToken, (req, res) => {
                 name:req.body.name,
                 greenhouseDepartment:req.body.greenhouseDepartment,
                 latitude:req.body.latitude,
-                longitude:req.body.longitude
+                longitude:req.body.longitude,
+                hardwareSerial: req.body.hardwareSerial
             }).then(
                 node => res.status(200).send({id:node._id}),
                 error => res.status(500).send("[SensorNode::update] error updating SensorNode : " + error)
