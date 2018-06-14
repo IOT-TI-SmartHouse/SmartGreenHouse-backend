@@ -7,13 +7,6 @@ const verifyToken = require("../jwt/verifyToken");
 const config = require("../../config");
 const router = express.Router();
 
-User.create(
-{
-  username: "Admin",
-  password: bcrypt.hashSync("password", 8),
-  isAdmin: true
-});
-
 router.post("/register", verifyToken, function(req, res) {
   User.verifyAdmin(req.userId).then(
     success => {
